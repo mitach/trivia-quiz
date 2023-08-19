@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/x-icon" href="image/favicon.ico">
+    <link rel="icon" type="image/png" href="image/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="image/favicon-16x16.png" sizes="16x16">
     <title>Socket.io Chat</title>
 </head>
 <body>
@@ -15,11 +18,12 @@
         <button id="join-room">Join Room</button>
     </div>
 
-    <div id="chat">
+    <div id="chat" >
         <div id="messages"></div>
-        <!-- <textarea name="" id="messages" cols="30" rows="10"></textarea> -->
-        <input type="text" id="message" placeholder="Enter your message">
-        <button id="send">Send</button>
+        <div class="send-wrapper">
+            <textarea placeholder="Enter your message" id="message" cols="30" rows="2"></textarea>
+            <button id="send">Send</button>
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

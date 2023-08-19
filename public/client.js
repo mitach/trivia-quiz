@@ -12,10 +12,22 @@ document.getElementById('join-room').addEventListener('click', () => {
 
 // Send a chat message
 document.getElementById('send').addEventListener('click', () => {
-    const message = document.getElementById('message').value;
+    let message = document.getElementById('message').value;
     const room = document.getElementById('room').value;
+    const username = document.getElementById('username').value;
 
-    chat.sendMessage(socket, room, message);
+    message = message.trim()
+
+    if (!message) {
+        return;
+    }
+
+    const data = {
+        message,
+        room,
+        username
+    }
+    chat.sendMessage(socket, data);
 
     // socket.emit('message', { room, message });
     // document.getElementById('message').value = '';
@@ -25,16 +37,6 @@ document.getElementById('send').addEventListener('click', () => {
 socket.on('message', (data) => {
     console.log(data)
     data.systemMessage 
-        ? printSystemMessage(data)
-        : printUserMessage(data)
+        ? chat.displaySystemMessage(data)
+        : chat.displayUserMessage(data)
 });
-
-function printSystemMessage(data) {
-    const messages = document.getElementById('messages');
-    messages.innerHTML += `<p>${data.message}</p>`;
-}
-
-function printUserMessage(data) {
-    const messages = document.getElementById('messages');
-    messages.innerHTML += `<p>${data.message}</p>`;
-}

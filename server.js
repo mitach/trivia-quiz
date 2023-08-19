@@ -16,21 +16,27 @@ io.on('connection', (socket) => {
         console.log(`User joined room: ${room}`);
         socket.join(room);
 
-        const date = new Date();
-        const hours = date.getHours();
+        const newDate = new Date();
+        const hours = newDate.getHours();
         const formattedHours = hours < 10 ? `0${hours}` : hours;
-        const minutes = date.getMinutes();
+        const minutes = newDate.getMinutes();
         const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-        // const formatedDate = `${date.getHours()}:${date.getMinutes()}`;
-        const newDate = `${formattedHours}:${formattedMinutes}`;
+        const date = `${formattedHours}:${formattedMinutes}`;
 
-        const message = `${newDate} ${username} joined room: ${room}`;
+        const message = `joined room: ${room}`;
         
-        io.to(room).emit('message', { message, systemMessage: true })
+        const data = {
+            username,
+            message,
+            systemMessage: true,
+        }
+        
+        io.to(room).emit('message', data)
     });
 
     // Handle chat messages
     socket.on('message', (data) => {
+        console.log('FLAG')
         console.log(data)
         io.to(data.room).emit('message', data);
     });
